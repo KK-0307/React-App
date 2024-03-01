@@ -1,3 +1,4 @@
+//PostItem.tsx
 import React, { useState } from 'react';
 import PostForm from './PostForm';
 import { Post, PostProps } from './types';

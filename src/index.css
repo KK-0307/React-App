@@ -19,19 +19,32 @@
 }
 
 .post-item {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-  background-color: #da9ada;
+  background: white;
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
 }
 
 .voting-buttons {
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;
-  border-right: 1px solid #d90ba2;
+  margin-right: 8px;
+}
+
+.voting-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff4500;
+}
+
+.reply-button {
+  color: #0079d3;
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .post-content {

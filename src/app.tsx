@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-start p-4">
       <div className="w-full max-w-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">CIS 197 Community</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Kayan Corner</h1>
         <PostForm onPostSubmit={addPost} depth={0} />
         <PostList posts={posts} onReply={addPost} onVote={handleVote} />
       </div>
