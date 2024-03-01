@@ -6,6 +6,7 @@ export interface Post {
     parentId: number | null;
     depth: number;
     votes: number;
+    replies?: Post[];
   }
   
   export interface PostProps {

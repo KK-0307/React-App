@@ -1,5 +1,5 @@
-//PostItem.tsx
-import React, { useState } from 'react';
+// PostItem.tsx
+import React from 'react';
 import PostForm from './PostForm';
 import { Post, PostProps } from './types';
 
@@ -8,15 +8,14 @@ interface PostItemProps extends PostProps {
 }
 
 const PostItem: React.FC<PostItemProps> = ({ post, onReply, onVote }) => {
-  const [replies, setReplies] = useState<Post[]>([]);
-  const [isReplying, setIsReplying] = useState(false);
+  const [isReplying, setIsReplying] = React.useState(false);
 
   const handleReply = (reply: Post) => {
-    setReplies([...replies, reply]);
-    onReply(reply);
+    onReply({ ...reply, parentId: post.id, depth: post.depth + 1 });
     setIsReplying(false); // Hide reply form after submitting
   };
 
+  // The handleVote function should remain the same as we are passing the id of the post to the parent component
   const handleVote = (delta: number) => {
     onVote(post.id, delta);
   };
@@ -35,14 +34,16 @@ const PostItem: React.FC<PostItemProps> = ({ post, onReply, onVote }) => {
           </div>
           <p>{post.text}</p>
           <button onClick={() => setIsReplying(!isReplying)} className="reply-button mt-2 text-blue-500">Reply</button>
-          {isReplying && <PostForm onPostSubmit={handleReply} parentId={post.id} depth={post.depth + 1} />}
+          {isReplying && <PostForm onPostSubmit={handleReply} depth={post.depth + 1} />}
         </div>
       </div>
-      <div className="replies mt-4">
-        {replies.map((reply) => (
-          <PostItem key={reply.id} post={reply} onReply={onReply} onVote={onVote} />
-        ))}
-      </div>
+      {post.replies && post.replies.length > 0 && (
+        <div className="replies mt-4">
+          {post.replies.map((reply) => (
+            <PostItem key={reply.id} post={reply} onReply={onReply} onVote={onVote} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
