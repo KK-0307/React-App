@@ -1,132 +1,153 @@
-/* Tailwind CSS imports */
+/* Resetting some Tailwind styles and adding custom styles */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Custom styles */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: white;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --reddit-bg: #DAE0E6; /* Reddit background color */
+  --reddit-border: #CCD0D5; /* Reddit border color */
+  --reddit-text: #1A1A1B; /* Reddit text color */
+  --reddit-orange: #FF4500; /* Reddit orange */
+  --reddit-blue: #0079D3; /* Reddit blue */
+  --reply-indent: 1rem; /* Indentation for replies */
 }
 
+/* Apply custom variables */
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background-color: var(--reddit-bg);
+  color: var(--reddit-text);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--reddit-text);
+  margin: 1rem 0;
+}
+
+/* Styling for post items */
 .post-item {
   background: white;
-  margin-bottom: 16px;
-  padding: 16px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--reddit-border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
+/* Voting buttons */
 .voting-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
 
 .voting-buttons button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #ff4500;
+  color: var(--reddit-orange);
 }
 
+/* Reply button */
 .reply-button {
-  color: #0079d3;
+  color: var(--reddit-blue);
   cursor: pointer;
   background: none;
   border: none;
+  font-weight: 500;
 }
 
+/* Reply form and button */
+.reply-form {
+  margin-top: 0.5rem;
+}
+
+/* Post content area */
 .post-content {
-  flex: 1;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
+/* Post header */
 .post-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
+/* Replies indentation */
 .replies {
-  margin-left: 2rem;
+  margin-left: var(--reply-indent);
 }
 
-@media (max-width: 768px) {
-  .voting-buttons {
-    flex-direction: row;
-    border-right: none;
-    border-bottom: 1px solid #d90ba2;
-    justify-content: center;
-  }
-  .replies {
-    margin-left: 1rem;
-  }
+/* Input styles */
+.input, .textarea {
+  border: 1px solid var(--reddit-border);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  width: 100%;
 }
 
-a {
-  font-weight: 500;
+/* Submit button */
+button.submit {
+  background-color: var(--reddit-orange);
   color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 9999px; /* Fully rounded corners for pill shape */
+}
+
+/* Upvote and Downvote icons */
+.vote-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--reddit-orange);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .replies {
+    margin-left: 0.5rem;
+  }
+}
+
+/* Tailwind overrides */
+a {
+  color: var(--reddit-text);
   text-decoration: inherit;
 }
+
 a:hover {
-  color: #da9ada;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #da9ada;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  color: var(--reddit-blue);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #000000;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #d90ba2;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-radius: 9999px;
 }
 
+button:hover {
+  background-color: var(--reddit-orange);
+  color: white;
+}
+
+/* Light mode adjustments */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #da9ada;
-    background-color: #da9ada;
-    border-color: #d90ba2;
+    --reddit-bg: #FFFFFF;
+    --reddit-text: #333333;
+    --reddit-border: #E5E7EB;
   }
-  a:hover {
-    color: #da9ada;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+/* Ensuring the root styles are applied */
+html {
+  color: var(--reddit-text);
+  background-color: var(--reddit-bg);
 }
