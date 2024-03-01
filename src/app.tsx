@@ -8,20 +8,34 @@ function App() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const addPost = (newPost: Post) => {
-    setPosts([...posts, { ...newPost, votes: 0, replies: [] }]);
+    if (newPost.parentId === null) {
+      setPosts([...posts, { ...newPost, votes: 0, replies: [] }]);
+    } else {
+      setPosts(updatePosts(posts, newPost));
+    }
   };
 
-  const updateVotes = (posts: Post[], id: number, delta: number): Post[] => {
+  function updatePosts(posts: Post[], newPost: Post): Post[] {
+    return posts.map(post => {
+      if (post.id === newPost.parentId) {
+        return { ...post, replies: [...(post.replies || []), newPost] };
+      } else if (post.replies) {
+        return { ...post, replies: updatePosts(post.replies, newPost) };
+      }
+      return post;
+    });
+  }
+
+  function updateVotes(posts: Post[], id: number, delta: number): Post[] {
     return posts.map(post => {
       if (post.id === id) {
         return { ...post, votes: post.votes + delta };
-      }
-      if (post.replies) {
+      } else if (post.replies) {
         return { ...post, replies: updateVotes(post.replies, id, delta) };
       }
       return post;
     });
-  };
+  }
 
   const handleVote = (id: number, delta: number) => {
     setPosts(updateVotes(posts, id, delta));
