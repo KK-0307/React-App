@@ -1,4 +1,3 @@
-//PostItem.tsx
 import React, { useState } from 'react';
 import PostForm from './PostForm';
 import { Post, PostProps } from './types';
@@ -8,13 +7,14 @@ interface PostItemProps extends PostProps {
 }
 
 const PostItem: React.FC<PostItemProps> = ({ post, onReply, onVote }) => {
-  const [replies, setReplies] = useState<Post[]>([]);
+  const [replies, setReplies] = useState<Post[]>(post.replies || []);
   const [isReplying, setIsReplying] = useState(false);
 
   const handleReply = (reply: Post) => {
-    setReplies([...replies, reply]);
-    onReply(reply);
-    setIsReplying(false); // Hide reply form after submitting
+    const newReply = { ...reply, replies: [] };
+    setReplies([...replies, newReply]);
+    onReply(newReply);
+    setIsReplying(false);
   };
 
   const handleVote = (delta: number) => {

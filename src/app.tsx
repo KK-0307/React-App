@@ -1,4 +1,3 @@
-// App.tsx
 import React, { useState } from 'react';
 import PostForm from './PostForm';
 import PostList from './PostList';
@@ -9,16 +8,23 @@ function App() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const addPost = (newPost: Post) => {
-    setPosts([...posts, { ...newPost, votes: 0 }]);
+    setPosts([...posts, { ...newPost, votes: 0, replies: [] }]);
   };
 
-  const handleVote = (id: number, delta: number) => {
-    setPosts(posts.map(post => {
+  const updateVotes = (posts: Post[], id: number, delta: number): Post[] => {
+    return posts.map(post => {
       if (post.id === id) {
         return { ...post, votes: post.votes + delta };
       }
+      if (post.replies) {
+        return { ...post, replies: updateVotes(post.replies, id, delta) };
+      }
       return post;
-    }));
+    });
+  };
+
+  const handleVote = (id: number, delta: number) => {
+    setPosts(updateVotes(posts, id, delta));
   };
 
   return (
